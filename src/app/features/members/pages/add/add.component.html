@@ -1,0 +1,26 @@
+<div style="width: 250px;margin:auto;margin-top: 40px;">
+    <form [formGroup]="formGroupAddMember">
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-user"></i>
+            <input id="pseudo-input" type="text" formControlName="Pseudo" pInputText placeholder="Pseudo"/>
+        </div>
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-at"></i>
+            <input id="email-input" type="email" formControlName="Email" pInputText placeholder="Email"/>
+        </div>
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-calendar"></i>
+            <input id="birthdate-input" type="date" formControlName="Birthdate" pInputText placeholder="Date de naissance"/>
+        </div>
+        <div class="m-2">
+            <p-selectButton [options]="genders" formControlName="Gender" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-star"></i>
+            <input id="elo-input" type="text" formControlName="Elo" pInputText placeholder="Elo"/>
+        </div>
+        <div class="m-4">
+            <button pButton type="button" label="Inscrire" (click)="submit()"></button>
+        </div>
+    </form>
+</div>

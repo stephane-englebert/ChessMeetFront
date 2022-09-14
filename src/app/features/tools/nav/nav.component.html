@@ -1,0 +1,10 @@
+<p-menubar [model]="items" *ngIf="isLogged">
+    <span>
+        <i class="pi pi-user" style="font-size: 1.3rem;margin-right: 10px;"></i>
+    </span>
+    <span> {{ pseudo | titlecase}}  </span>
+    <i class="pi pi-power-off" style="font-size: 1.3rem;cursor: pointer;margin-left: 20px;" (click)="logout()"></i>
+</p-menubar>
+<p-menubar [model]="items" *ngIf="!isLogged">
+    <app-navbar-connect></app-navbar-connect>
+</p-menubar>

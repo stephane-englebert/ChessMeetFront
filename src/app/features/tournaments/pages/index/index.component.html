@@ -1,0 +1,80 @@
+<p-table [value]="tournaments" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Nom Tournoi</th>
+            <th>Lieu</th>
+            <th>Catégories</th>
+            <th>Elo</th>
+            <th>Statut</th>
+            <th>Fin des inscriptions</th>
+            <th>Joueurs</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tournament>
+        <tr>
+            <td>{{tournament.name}}</td>
+            <td>{{tournament.place}}</td>
+            <td>
+                <div *ngFor="let cat of tournament.categories">{{cat}}</div>
+            </td>
+            <td>{{tournament.eloMin}} - {{tournament.eloMax}}</td>
+            <td>
+                <span *ngIf="tournament.status == 'waitingForPlayers'">En attente de joueurs</span>
+                <span *ngIf="tournament.status == 'inProgress'">En cours</span>
+                <span *ngIf="tournament.status == 'closed'">Fermé</span>                
+            </td>
+            <td>{{tournament.endRegistration | date: 'dd/MM/YYYY'}}</td>
+            <td>../..</td>
+            <td>
+                <button pButton 
+                        pTooltip="Détails" 
+                        tooltipPosition="top" 
+                        type="button" 
+                        label="" 
+                        icon="pi pi-search" 
+                        class="p-button-secondary p-button-raised p-button-rounded m-1"
+                ></button>
+                <button pButton 
+                        *ngIf="isAdmin"
+                        pTooltip="Modifier" 
+                        tooltipPosition="top" 
+                        type="button" 
+                        label="" 
+                        icon="pi pi-pencil" 
+                        class="p-button-primary p-button-raised p-button-rounded m-1"
+                ></button>
+                <button pButton 
+                        *ngIf="isAdmin"
+                        pTooltip="Supprimer" 
+                        tooltipPosition="top" 
+                        type="button" 
+                        label="" 
+                        icon="pi pi-trash" 
+                        class="p-button-danger p-button-raised p-button-rounded m-1"
+                ></button>
+                <button pButton 
+                        *ngIf="isLogged"
+                        pTooltip="S'inscrire" 
+                        tooltipPosition="top" 
+                        type="button" 
+                        label="" 
+                        icon="pi pi-sign-in" 
+                        class="p-button-success p-button-raised p-button-rounded m-1"
+                ></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+    <!-- // place: string;
+    // playersMin: number;
+    // playersMax: number;
+    // eloMin: number;
+    // eloMax: number;
+    // categories: string[];
+    // status: string;
+    // currentRound: number;
+    // womenOnly: boolean;
+    // endRegistration: Date; -->

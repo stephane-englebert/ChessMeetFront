@@ -1,0 +1,24 @@
+<p-table [value]="members" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Id</th>
+            <th>Role</th>
+            <th>Pseudo</th>
+            <th>Email</th>
+            <th>Birthdate</th>
+            <th>Gender</th>
+            <th>Elo</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-member>
+        <tr>
+            <td>{{member.id}}</td>
+            <td>{{member.role}}</td>
+            <td>{{member.pseudo}}</td>
+            <td>{{member.email}}</td>
+            <td>{{member.birthdate | date: 'dd/MM/YYYY'}}</td>
+            <td>{{member.gender}}</td>
+            <td>{{member.elo}}</td>
+        </tr>
+    </ng-template>
+</p-table>

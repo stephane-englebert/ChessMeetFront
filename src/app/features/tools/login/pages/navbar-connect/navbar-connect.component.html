@@ -1,0 +1,13 @@
+<form [formGroup]="formGroupLogin">
+    <span class="p-input-icon-left" style="margin-right: 10px;">
+        <i class="pi pi-user"></i>
+        <input id="username-input" type="text" formControlName="UserName" pInputText placeholder="Pseudo (ou email)"/>
+    </span>
+    <span class="p-input-icon-left" style="margin-right: 10px;">
+        <i class="pi pi-key"></i>
+        <input id="password-input" type="password" formControlName="Password" pPassword placeholder="Password" />
+    </span>
+    <span>
+        <button pButton type="button" icon="pi pi-arrow-circle-right" (click)="submit()"></button>
+    </span>
+</form>
