@@ -1,0 +1,63 @@
+<div style="width: 250px;margin:auto;margin-top: 40px;">
+    <form [formGroup]="formGroupAddTournament">
+        <!-- NOM DU TOURNOI -->
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-tag"></i>
+            <input id="name-input" type="text" formControlName="Name" pInputText placeholder="Nom du tournoi"/>
+        </div>
+        <!-- LIEU DU TOURNOI -->
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-map"></i>
+            <input id="place-input" type="text" formControlName="Place" pInputText placeholder="Lieu du tournoi"/>
+        </div>
+        <!-- PLAYERS MIN -->
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-user"></i>
+            <input id="playersmin-input" type="text" formControlName="PlayersMin" pInputText placeholder="Nbre de joueurs min"/>
+        </div>
+        <!-- PLAYERS MAX -->
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-user"></i>
+            <input id="playersmax-input" type="text" formControlName="PlayersMax" pInputText placeholder="Nbre de joueurs max"/>
+        </div>
+        <!-- ELO MINIMUM -->
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-star"></i>
+            <input id="elomin-input" type="text" formControlName="EloMin" pInputText placeholder="Elo minimum"/>
+        </div>
+        <!-- ELO MAXIMUM -->
+        <div class="p-input-icon-left m-2">
+            <i class="pi pi-star"></i>
+            <input id="elomax-input" type="text" formControlName="EloMax" pInputText placeholder="Elo maximum"/>
+        </div>
+        <!-- CATEGORIES -->
+        <div class="m-2">
+            <p-selectButton [options]="categoriesOptions" formControlName="Categories" [multiple]="true" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+        <!-- WOMEN ONLY -->
+        <div class="m-2">
+            <p-selectButton [options]="womenOptions" formControlName="WomenOnly" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+        <!-- DATE FIN DES INSCRIPTIONS -->
+        <div class="p-input-icon-left m-2">
+            <div class="m-2">
+                Date de fin des inscriptions
+            </div>
+            <i class="pi pi-calendar"></i>
+            <input id="endregistration-input" type="date" formControlName="EndRegistration" pInputText placeholder="Fin des inscriptions le"/>
+        </div>
+
+        <div class="m-4">
+            <button pButton type="button" label="Créer tournoi" (click)="submit()"></button>
+        </div>
+    </form>
+</div>
+<!-- Name: string;
+Place: string;
+PlayersMin: number;
+PlayersMax: number;
+EloMin: number;
+EloMax: number;
+Categories: string[];
+WomenOnly: boolean;
+EndRegistration: Date; -->
