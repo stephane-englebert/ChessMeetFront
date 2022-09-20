@@ -10,6 +10,12 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../tools/auth/interceptor';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -23,7 +29,12 @@ import { AuthInterceptor } from '../tools/auth/interceptor';
     ToolsModule,
     TableModule,
     ButtonModule,
-    TooltipModule
+    TooltipModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    SelectButtonModule,
+    FormsModule,
+    DialogModule
   ],
   providers:[
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

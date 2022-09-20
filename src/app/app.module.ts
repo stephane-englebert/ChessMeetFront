@@ -16,6 +16,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { GlobalConst } from './features/tools/globals/globals';
 import { AuthInterceptor } from './features/tools/auth/interceptor';
 import { SelectButton, SelectButtonModule } from 'primeng/selectbutton';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { SelectButton, SelectButtonModule } from 'primeng/selectbutton';
     NavbarConnectComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -35,6 +39,11 @@ import { SelectButton, SelectButtonModule } from 'primeng/selectbutton';
     TableModule,
     TooltipModule,
     SelectButtonModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      positionClass: 'toast-center-center'
+    }), // ToastrModule added
+
   ],
   providers: [
     GlobalConst,

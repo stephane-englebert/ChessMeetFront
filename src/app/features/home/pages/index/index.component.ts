@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api'
-import { LoginService, memberInfos } from '../login/services/login.service';
+import { MenuItem } from 'primeng/api';
+import { LoginService, memberInfos } from 'src/app/features/tools/login/services/login.service';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  selector: 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.scss']
 })
-export class NavComponent implements OnInit {
+export class IndexComponent implements OnInit {
 
   items: MenuItem[] = [];
   isLogged!: Boolean;
@@ -36,14 +35,9 @@ export class NavComponent implements OnInit {
     this._loginService.whichPseudo.subscribe({
       next : (data: string) => this.pseudo = data
     });
-    this.items = this._loginService.getUserMenu();
     this._loginService.userMenu.subscribe({
       next : (data: MenuItem[]) => this.items = data 
     });
-    this._loginService.initUserInfos();
-  }
-
-  logout(){
-    this._loginService.logoutUser();
+    this._loginService.initUserInfos(); 
   }
 }
