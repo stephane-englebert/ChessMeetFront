@@ -3,6 +3,7 @@
         <tr>
             <th>Nom Tournoi</th>
             <th>Lieu</th>
+            <th><div>Women</div><div>Only</div></th>
             <th>Catégories</th>
             <th>Elo</th>
             <th>Statut</th>
@@ -13,8 +14,11 @@
     </ng-template>
     <ng-template pTemplate="body" let-tournament>
         <tr>
-            <td>{{tournament.name}}</td>
+            <td>{{tournament.name}} ({{ tournament.womenOnly }})({{ this.isAMan }}) - ({{ tournament.canregister }})</td>
             <td>{{tournament.place}}</td>
+            <td>
+                <span *ngIf="tournament.womenOnly"><i class="pi pi-star-fill"></i></span>
+            </td>
             <td>
                 <div *ngFor="let cat of tournament.categories">{{cat}}</div>
             </td>
@@ -25,10 +29,11 @@
                 <span *ngIf="tournament.status == 'closed'">Fermé</span>                
             </td>
             <td>{{tournament.endRegistration | date: 'dd/MM/YYYY'}}</td>
-            <td>../..</td>
+            <td>{{ tournament.countPlayers }} / {{ tournament.playersMax }}</td>
             <td>
                 <button pButton 
                         pTooltip="Détails" 
+                        (click)="showModalDialog(tournament.guid)"
                         tooltipPosition="top" 
                         type="button" 
                         label="" 
@@ -45,7 +50,8 @@
                         class="p-button-primary p-button-raised p-button-rounded m-1"
                 ></button>
                 <button pButton 
-                        *ngIf="isAdmin"
+                        *ngIf="isAdmin && tournament.status != 'inProgress'"
+                        (click)="deleteTourn(tournament.guid)"
                         pTooltip="Supprimer" 
                         tooltipPosition="top" 
                         type="button" 
@@ -54,7 +60,10 @@
                         class="p-button-danger p-button-raised p-button-rounded m-1"
                 ></button>
                 <button pButton 
-                        *ngIf="isLogged"
+                        *ngIf=" isLogged && tournament.canregister &&
+                                (tournament.status == 'waitingForPlayers') && 
+                                (checkEndRegistration(tournament.endRegistration)) && !tournament.isRegistered"
+                        (click)="registrationTournament(tournament.guid)"
                         pTooltip="S'inscrire" 
                         tooltipPosition="top" 
                         type="button" 
@@ -62,12 +71,74 @@
                         icon="pi pi-sign-in" 
                         class="p-button-success p-button-raised p-button-rounded m-1"
                 ></button>
+                <button pButton 
+                        *ngIf=" isLogged && (tournament.status == 'waitingForPlayers') && tournament.isRegistered"
+                        (click)="DeleteRegistrationTournament(tournament.guid)"
+                        pTooltip="Se désinscrire" 
+                        tooltipPosition="top" 
+                        type="button" 
+                        label="" 
+                        icon="pi pi-sign-out" 
+                        class="p-button-danger p-button-raised p-button-rounded m-1"
+                ></button>
             </td>
         </tr>
     </ng-template>
 </p-table>
+<form [formGroup]="formGroupRegTourn" method="post">
+    <input id="TournamentGuid-input" type="hidden" formControlName="TournamentGuid" pInput value=""/>
+</form>
+<p-dialog header="TOURNOI : {{ tournamentModal.name | titlecase }}" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+        <p-table [value]="tournamentInfos" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Lieu</th>
+                    <th>Catégories</th>
+                    <th>Elo</th>
+                    <th>Statut</th>
+                    <th>Fin des inscriptions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-tournamentInf>
+                <tr>
+                    <td>{{tournamentInf.place}}</td>
+                    <td>{{tournamentInf.categories}}</td>
+                    <td>{{tournamentInf.eloMin}} - {{ tournamentInf.eloMax }}</td>
+                    <td>
+                        <span *ngIf="tournamentInf.status == 'waitingForPlayers'">En attente de joueurs</span>
+                        <span *ngIf="tournamentInf.status == 'inProgress'">En cours</span>
+                        <span *ngIf="tournamentInf.status == 'closed'">Fermé</span> 
+                    </td>
+                    <td>{{tournamentInf.endRegistration | date: 'dd/MM/YYYY'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
 
+        <p-table [value]="registeredPlayers" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th colspan="3" style="text-align: center;">{{ registeredPlayers.length }} PARTICIPANT(E)S</th>
+                </tr>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Genre</th>
+                    <th>Elo</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-player>
+                <tr>
+                    <td>{{ player.pseudo | titlecase}}</td>
+                    <td>{{ player.gender | titlecase}}</td>
+                    <td>{{ player.elo }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
 
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-times" (click)="displayModal=false" label="Fermer"></p-button>
+        </ng-template>
+</p-dialog>
     <!-- // place: string;
     // playersMin: number;
     // playersMax: number;
